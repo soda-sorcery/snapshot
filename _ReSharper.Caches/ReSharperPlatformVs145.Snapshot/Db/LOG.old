@@ -1,0 +1,28 @@
+2016/06/21-13:40:51.268 1594 Recovering log #123
+2016/06/21-13:40:51.284 1594 Level-0 table #134: started
+2016/06/21-13:40:51.315 1594 Level-0 table #134: 1132132 bytes OK
+2016/06/21-13:40:51.315 1594 Delete type=0 #123
+2016/06/21-13:40:51.315 1594 Delete type=3 #121
+2016/06/21-13:41:06.970 20ac Moved #134 to level-1 1132132 bytes OK: files[ 0 1 9 0 0 0 0 ]
+2016/06/21-13:41:10.767 20ac Compacting 1@1 + 9@2 files
+2016/06/21-13:41:10.814 20ac Generated table #136: 5410 keys, 2162313 bytes
+2016/06/21-13:41:10.866 20ac Generated table #137: 4407 keys, 2165046 bytes
+2016/06/21-13:41:10.919 20ac Generated table #138: 4308 keys, 2176368 bytes
+2016/06/21-13:41:10.980 20ac Generated table #139: 2941 keys, 2172955 bytes
+2016/06/21-13:41:11.035 20ac Generated table #140: 2584 keys, 2175400 bytes
+2016/06/21-13:41:11.084 20ac Generated table #141: 3296 keys, 2160730 bytes
+2016/06/21-13:41:11.133 20ac Generated table #142: 2664 keys, 2187750 bytes
+2016/06/21-13:41:11.199 20ac Generated table #143: 1583 keys, 3953550 bytes
+2016/06/21-13:41:11.211 20ac Generated table #144: 62 keys, 4440 bytes
+2016/06/21-13:41:11.211 20ac Compacted 1@1 + 9@2 files => 19158552 bytes
+2016/06/21-13:41:11.215 20ac Delete type=2 #124
+2016/06/21-13:41:11.216 20ac Delete type=2 #125
+2016/06/21-13:41:11.216 20ac Delete type=2 #126
+2016/06/21-13:41:11.217 20ac Delete type=2 #127
+2016/06/21-13:41:11.217 20ac Delete type=2 #128
+2016/06/21-13:41:11.218 20ac Delete type=2 #129
+2016/06/21-13:41:11.219 20ac Delete type=2 #130
+2016/06/21-13:41:11.219 20ac Delete type=2 #131
+2016/06/21-13:41:11.220 20ac Delete type=2 #132
+2016/06/21-13:41:11.221 20ac Delete type=2 #134
+2016/06/21-13:41:11.222 20ac compacted to: files[ 0 0 9 0 0 0 0 ]
