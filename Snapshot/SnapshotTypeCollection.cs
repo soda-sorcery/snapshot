@@ -10,7 +10,7 @@ namespace Snapshot
     // this is a type relator. it keeps a snapshot collection of all snapshots taken of the 
     // same type.
 
-    // var foo1 = new Foo().TakeTypeInstanceSnapshot<Foo>();
+    // var foo1 = new Foo().TakeTypeSnapshot<Foo>();
     // var foo2 = new Foo().TakePrivateSnapshot<Foo>();
 
     // even though foo2 didn't request a type collection, because it is of the same type as foo1
@@ -19,14 +19,11 @@ namespace Snapshot
     internal class SnapshotTypeCollection
     {
         internal int Id { get; private set; }
-        internal List<ISnapshot> snapshots { get; set; } = new List<ISnapshot>();
         
+        internal List<ISnapshot> snapshots = new List<ISnapshot>();
 
         internal void Add(ISnapshot snapshot)
         {
-            //var t = Task.Run(() => snapshots.Add(snapshot));
-
-            //snapshotPromises.Add(t);  
             AddToSnapshots(snapshot);
         }
 
@@ -35,9 +32,10 @@ namespace Snapshot
             snapshots.Add(snapshot);
         }
 
-        //private async Task AddToSnapshots(ISnapshot snapshot)
-        //{
-        //    await Task.Run(() => snapshots.Add(snapshot));
-        //}
+        internal List<ISnapshot> GetSnapshots()
+        {
+            
+            return snapshots;
+        }
     }
 }

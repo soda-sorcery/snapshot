@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -23,16 +24,16 @@ namespace Snapshot
 
     public class Snapshot<T> : ISnapshot where T : ISnapshot
     {
-        internal Snapshot(T obj, AutoCaptureControls acc, bool isPrivate = false)
+        internal Snapshot(T obj, bool isPrivate = false)
         {
-            _serializedObj = JsonConvert.SerializeObject(obj);
-            Id = CreateHash(obj);
+            _serializedObj = JsonConvert.SerializeObject(obj);          
             _key = obj.GetHashCode();
             CreateDate = DateTime.Now;
+            Id = CreateId();
             ObjImage = GetImage(_serializedObj);
             _reference = obj;
             _isPrivate = isPrivate;           
-            TryCreateSubscription();
+            //TryCreateSubscription();
         }
 
         // public properties
@@ -49,7 +50,7 @@ namespace Snapshot
         private readonly bool _isPrivate;
         private readonly int _key;
 
-        private void TryCreateSubscription()
+        internal void TryCreateSubscription()
         {
             var implementedInterfaces = _reference.GetType().GetInterfaces().FirstOrDefault(r => r == typeof(IAutoSnapshot));
             if (implementedInterfaces == null)
@@ -67,24 +68,32 @@ namespace Snapshot
 
         public void OnPropChanged(object sender, PropertyChangedEventArgs e)
         {
-           var updatedObj = (T) sender;
-           Camera.CreateSnapshot(updatedObj, _key, _isPrivate);
+            var serialized = JsonConvert.SerializeObject(sender);                        
+            var obj = GetImage(serialized);
+            Camera.CreateSnapshot(obj, _key, _isPrivate);
         }
 
 
-        private static T GetImage(string _serializedObj)
+        private static T GetImage(string serializedObj)
         {
-            var img = JsonConvert.DeserializeObject<T>(_serializedObj);
+            var img = JsonConvert.DeserializeObject<T>(serializedObj);
             return img;
         }
 
+        private string CreateId()
+        {
+            var guid = Guid.NewGuid();
+            return guid.ToString();
+        }
 
-        public static string CreateHash(ISnapshot obj)
+
+        private string CreateHash(ISnapshot obj)
         {
             var snapshotHashProvider = new SnapshotHashProvider();
             var serializedObj = JsonConvert.SerializeObject(obj);
             var hash = new StringBuilder();
-            var byteArray = Encoding.UTF8.GetBytes(serializedObj + serializedObj.GetHashCode());
+            var s = serializedObj + DateTime.Now.ToString("yyyy-mm-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            var byteArray = Encoding.UTF8.GetBytes(s);
             using (var stream = new MemoryStream(byteArray))
             {
                 snapshotHashProvider.Key = byteArray;

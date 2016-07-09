@@ -9,6 +9,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 using System.Security.Cryptography;
 
 namespace Snapshot
@@ -16,16 +17,16 @@ namespace Snapshot
     // this is the container for all snapshots in the app
     public class Camera : ICamera
     {
-        private static Dictionary<int, List<ISnapshot>> _snapShots = new Dictionary<int, List<ISnapshot>>();        
+        private static Dictionary<int, List<ISnapshot>> _snapShots = new Dictionary<int, List<ISnapshot>>();
         private static Dictionary<int, List<Task>> _promises = new Dictionary<int, List<Task>>();
-        internal static AutoCaptureControls autoCaptureControls = new AutoCaptureControls();
+
         private static Dictionary<int, SnapshotTypeCollection> _typeCollectionHashMap = new Dictionary<int, SnapshotTypeCollection>();
         private static Dictionary<int, ISnapshot> _snapshotParentHash = new Dictionary<int, ISnapshot>();
 
 
         // snapshot creation method -- 
         public static Snapshot<T> CreateSnapShot<T>(T obj, bool excludeSnapshotTypeCollection = false) where T : ISnapshot
-        {           
+        {
             // the object's hash code is used as the key because it shows reference equality
             var key = obj.GetHashCode();
 
@@ -36,18 +37,20 @@ namespace Snapshot
         // to a object is fired.
         internal static void CreateSnapshot<T>(T obj, int key, bool excludeSnapshotTypeCollection = false) where T : ISnapshot
         {
-            if (_promises.ContainsKey(key))
-            {
-                _promises[key].Add(Task.Run(() => AddSnapshotToCamera(obj, key, excludeSnapshotTypeCollection)));
-                return;
-            }
-            _promises.Add(key, new List<Task> {Task.Run(() => AddSnapshotToCamera(obj, key, excludeSnapshotTypeCollection))});
+            //if (_promises.ContainsKey(key))
+            //{
+            //    _promises[key].Add(Task.Run(() => AddSnapshotToCamera(obj, key, excludeSnapshotTypeCollection)));
+            //    return;
+            //}
+            //_promises.Add(key, new List<Task> { Task.Run(() => AddSnapshotToCamera(obj, key, excludeSnapshotTypeCollection)) });
+
+            AddSnapshotToCamera(obj, key, excludeSnapshotTypeCollection);
         }
 
         // add a new snapshot to the camera roll (container)
         private static Snapshot<T> AddSnapshotToCamera<T>(T obj, int key, bool excludeSnapshotTypeCollection = false) where T : ISnapshot
         {
-            var snapshot = new Snapshot<T>(obj, autoCaptureControls, excludeSnapshotTypeCollection);
+            var snapshot = new Snapshot<T>(obj, excludeSnapshotTypeCollection);
             AddToSnapshotHash(key, snapshot);
 
             // here a check is made to see if there are related types in the gallery, i.e., 
@@ -60,7 +63,7 @@ namespace Snapshot
         }
 
         // returns the lastest snapshot added to the gallery
-        public async Task<Snapshot<T>> GetLatestSnapShot<T>(T obj) where T : ISnapshot
+        public Snapshot<T> GetLatestSnapShot<T>(T obj) where T : ISnapshot
         {
             var key = GetKey(obj);
 
@@ -69,13 +72,13 @@ namespace Snapshot
                 return null;
             }
 
-            var snapshots = await GetAllSnapshots<T>(obj);
+            var snapshots =  GetAllSnapshots<T>(obj);
             var snapshot = snapshots.Last();
             return snapshot;
         }
 
         // gets all the snapshots associated with a specific reference
-        public async Task<List<Snapshot<T>>> GetAllSnapshots<T>(T snapshot) where T : ISnapshot
+        public List<Snapshot<T>> GetAllSnapshots<T>(T snapshot) where T : ISnapshot
         {
             var key = GetKey(snapshot);
 
@@ -85,19 +88,19 @@ namespace Snapshot
             }
 
 
-            await Task.WhenAll(_promises[key]);
+          //  await Task.WhenAll(_promises[key]);
 
             // get the collection
             var snapshots = _snapShots[key];
 
             // cast snapshots
-            var requestedSnapshots = ConvertToSnapshot<T>(snapshots);
-            requestedSnapshots = RemoveDuplicates(requestedSnapshots);
+            var requestedSnapshots = FinalizeSnapshots<T>(snapshots);
+            
             return requestedSnapshots;
         }
 
         // gets all snapshots of a type
-        public async Task<List<Snapshot<T>>> GetSnapShotTypeCollection<T>(T obj) where T : ISnapshot
+        public List<Snapshot<T>> GetSnapShotTypeCollection<T>(T obj) where T : ISnapshot
         {
 
             var typeKey = obj.GetType();
@@ -107,18 +110,16 @@ namespace Snapshot
                 return null;
             }
 
-            await Task.WhenAll(_promises[key]);
+            //await Task.WhenAll(_promises[key]);
 
-            var snapshotTypeCollection =  GetSnapshotTypeCollection(typeKey);            
-            var snapshots = ConvertToSnapshot<T>(snapshotTypeCollection.snapshots);
-
-            snapshots = RemoveDuplicates(snapshots);
+            var snapshotTypeCollection = GetSnapshotTypeCollection(typeKey);
+            var snapshots = FinalizeSnapshots<T>(snapshotTypeCollection.snapshots);
 
             return snapshots;
         }
 
         // gets the first snapshot taken of a reference
-        public async Task<Snapshot<T>> GetFirstSnapshot<T>(T obj) where T : ISnapshot
+        public Snapshot<T> GetFirstSnapshot<T>(T obj) where T : ISnapshot
         {
             var key = obj.GetHashCode();
 
@@ -126,7 +127,7 @@ namespace Snapshot
             {
                 return null;
             }
-            var snapshots = await GetAllSnapshots<T>(obj);
+            var snapshots = GetAllSnapshots<T>(obj);
             var snapshot = snapshots.First();
             return snapshot;
         }
@@ -154,7 +155,7 @@ namespace Snapshot
             foreach (var snap in snapshotsToConvert)
             {
                 var developedSnapshot = (Snapshot<T>)snap;
-               
+
                 snapshots.Add(developedSnapshot);
             }
             return snapshots;
@@ -172,11 +173,20 @@ namespace Snapshot
             SnapshotTypeCollection typeCollection = null;
             if (_typeCollectionHashMap.ContainsKey(key))
             {
-                
-                typeCollection = _typeCollectionHashMap[key];              
+
+                typeCollection = _typeCollectionHashMap[key];
             }
 
             return typeCollection;
+        }
+
+        private List<Snapshot<T>> FinalizeSnapshots<T>(List<ISnapshot> snapshots) where T : ISnapshot
+        {
+            var convertedSnapshots = ConvertToSnapshot<T>(snapshots);
+
+            var uniqueSnapshots = RemoveDuplicates(convertedSnapshots);
+
+            return uniqueSnapshots;
         }
 
         private static void TryAddToSnapshotTypeCollection<T>(Snapshot<T> obj) where T : ISnapshot
@@ -212,14 +222,10 @@ namespace Snapshot
             else
             {
                 _snapShots.Add(key, new List<ISnapshot> { snapshot });
+                snapshot.TryCreateSubscription();
             }
-
-            if (!_snapshotParentHash.ContainsKey(key))
-            {
-                _snapshotParentHash.Add(key, snapshot);
-            } 
-        }
+        }   
     }
 
-    
+
 }

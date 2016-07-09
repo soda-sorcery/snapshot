@@ -24,7 +24,7 @@ namespace Snapshot
             return s;
         }
 
-        public static T TakeTypeInstanceSnapshot<T>(this object obj) where T : ISnapshot
+        public static T TakeTypeSnapshot<T>(this object obj) where T : ISnapshot
         {
             var s = (T)obj;
             var snapshot = Camera.CreateSnapShot(s);

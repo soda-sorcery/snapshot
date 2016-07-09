@@ -1,8 +1,6 @@
 ﻿<RecentFiles>
   <RecentFiles>
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:project.json" caret="70" fromTop="3" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Snapshot.cs" caret="1089" fromTop="0" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:CameraExtensions.cs" caret="203" fromTop="6" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotObjectExtensions.cs" caret="494" fromTop="17" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotTypeCollection.cs" caret="775" fromTop="14" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Camera.cs" caret="3489" fromTop="34" />
@@ -11,14 +9,10 @@
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:ISnapshot.cs" caret="147" fromTop="7" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:IAutoSnapshot.cs" caret="151" fromTop="6" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:ICamera.cs" caret="201" fromTop="10" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotUnitTests.cs" caret="2587" fromTop="77" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Snapshot.cs" caret="0" fromTop="0" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:AutoSnapshotUnitTests.cs" caret="1060" fromTop="10" />
   </RecentFiles>
   <RecentEdits>
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Snapshot.cs" caret="1621" fromTop="20" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotUnitTests.cs" caret="2616" fromTop="0" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotUnitTests.cs" caret="3241" fromTop="28" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotUnitTests.cs" caret="2926" fromTop="15" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Snapshot.cs" caret="692" fromTop="0" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Snapshot.cs" caret="2308" fromTop="11" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Camera.cs" caret="984" fromTop="7" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Camera.cs" caret="1530" fromTop="17" />
@@ -31,18 +25,23 @@
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Camera.cs" caret="7948" fromTop="16" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Camera.cs" caret="7975" fromTop="14" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotHashProvider.cs" caret="355" fromTop="15" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:CameraExtensions.cs" caret="203" fromTop="6" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotUnitTests.cs" caret="2739" fromTop="18" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotUnitTests.cs" caret="965" fromTop="4" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:AutoSnapshotUnitTests.cs" caret="3245" fromTop="18" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:AutoSnapshotUnitTests.cs" caret="848" fromTop="4" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Snapshot.cs" caret="1629" fromTop="21" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Snapshot.cs" caret="1089" fromTop="18" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotObjectExtensions.cs" caret="725" fromTop="10" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotUnitTests.cs" caret="842" fromTop="13" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:AutoSnapshotUnitTests.cs" caret="725" fromTop="13" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotTypeCollection.cs" caret="775" fromTop="14" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Camera.cs" caret="4476" fromTop="18" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Camera.cs" caret="4191" fromTop="10" />
     <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:Camera.cs" caret="3489" fromTop="16" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotUnitTests.cs" caret="2323" fromTop="26" />
-    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:SnapshotUnitTests.cs" caret="2516" fromTop="21" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:AutoSnapshotUnitTests.cs" caret="2224" fromTop="26" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:AutoSnapshotUnitTests.cs" caret="2760" fromTop="17" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:AutoSnapshotUnitTests.cs" caret="3040" fromTop="24" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:AutoSnapshotUnitTests.cs" caret="1409" fromTop="15" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:AutoSnapshotUnitTests.cs" caret="1560" fromTop="18" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:AutoSnapshotUnitTests.cs" caret="3795" fromTop="21" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:AutoSnapshotUnitTests.cs" caret="451" fromTop="18" />
+    <File id="C0D9C13F-2725-45CD-A22D-AE12BAF03D4D/f:AutoSnapshotUnitTests.cs" caret="601" fromTop="23" />
   </RecentEdits>
 </RecentFiles>
