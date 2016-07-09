@@ -1,18 +1,12 @@
 ﻿<RecentlyViewedMethods>
   <RecentlyViewedMethods>
-    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.SuperVillian.set_HasEvilPlan%28System.Boolean%29" />
-    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.SuperVillian.%23ctor%28System.String%29" />
-    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.Examples.Simple_Example_Of_Manual_Snapshot" />
+    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.AutoSnapshotUnitTests.should_take_snapshots_of_multiple_references" />
+    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.SnapshotExamples.Simple_Example_Of_Manual_Snapshot" />
     <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.Camera.AddToSnapshotHash%60%601%28System.Int32%2CSnapshot.Snapshot%7B%60%600%7D%29" />
-    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.Examples.%23ctor%28Xunit.Abstractions.ITestOutputHelper%29" />
+    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.SnapshotExamples.Simple_Example_With_Auto_Snapshot" />
+    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.SnapshotExamples.%23ctor%28Xunit.Abstractions.ITestOutputHelper%29" />
     <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.AutoSnapshotUnitTests.should_retrieve_the_lastest_instantiation_from_the_collection" />
-    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.Examples.Simple_Example_With_Type_Snapshot" />
-    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.Examples.Simple_Example_With_Auto_Snapshot" />
-    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.Examples.Simple_Example_With_Private_Snapshot" />
-    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.AutoSnapshotUnitTests.should_retrieve_the_first_instaniation_from_the_collection" />
-    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.Camera.GetFirstSnapshot%60%601%28%60%600%29" />
-    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.Camera.GetSnapShotTypeCollection%60%601%28%60%600%29" />
-    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.ICamera.GetAllSnapshots%60%601%28%60%600%29" />
-    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.Camera.GetSnapshotTypeCollection%28System.Type%29" />
+    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.SnapshotExamples.Simple_Example_With_Private_Snapshot" />
+    <RecentMethod id="c0d9c13f-2725-45cd-a22d-ae12baf03d4d%28Snapshot%29-120F12D7%5B.NETCoreApp%2CVersion%3Dv1.0%5D/M%3ASnapshot.SnapshotExamples.Simple_Example_With_Type_Snapshot" />
   </RecentlyViewedMethods>
 </RecentlyViewedMethods>

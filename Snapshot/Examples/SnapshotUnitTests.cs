@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Snapshot.Examples;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Snapshot
+namespace Snapshot.Examples
 {
-    public class Examples
+    public class SnapshotUnitTests
     {
 
         // in a real-world app, ICamera would be wired into an IoC container at App Start and implemented
@@ -16,7 +17,7 @@ namespace Snapshot
         private readonly ITestOutputHelper output;
         private readonly Camera _camera;
 
-        public Examples(ITestOutputHelper output)
+        public SnapshotUnitTests(ITestOutputHelper output)
         {
             this.output = output;
             _camera = new Camera();
@@ -121,15 +122,4 @@ namespace Snapshot
 
     }
 
-    public class SuperVillian : ISnapshot
-    {
-        public SuperVillian(string name)
-        {
-            Name = name;
-        }
-
-        public string Name { get; set; }
-
-        public bool HasEvilPlan { get; set; }
-    }
 }
