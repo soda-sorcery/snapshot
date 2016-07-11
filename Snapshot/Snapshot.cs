@@ -26,14 +26,13 @@ namespace Snapshot
     {
         internal Snapshot(T obj, bool isPrivate = false)
         {
-            _serializedObj = JsonConvert.SerializeObject(obj);          
+            var serializedObj = JsonConvert.SerializeObject(obj);          
             _key = obj.GetHashCode();
             CreateDate = DateTime.Now;
             Id = CreateId();
-            ObjImage = GetImage(_serializedObj);
+            ObjImage = GetImage(serializedObj);
             _reference = obj;
-            _isPrivate = isPrivate;           
-            //TryCreateSubscription();
+            _isPrivate = isPrivate;                       
         }
 
         // public properties
@@ -45,7 +44,6 @@ namespace Snapshot
         public string Id { get; private set; }
 
         // private fields
-        private readonly string _serializedObj;
         private readonly T _reference;
         private readonly bool _isPrivate;
         private readonly int _key;
@@ -67,14 +65,15 @@ namespace Snapshot
         }
 
         public void OnPropChanged(object sender, PropertyChangedEventArgs e)
-        {
-            var serialized = JsonConvert.SerializeObject(sender);                        
-            var obj = GetImage(serialized);
+        {            
+            var obj = (T) sender;
+           
+
             Camera.CreateSnapshot(obj, _key, _isPrivate);
         }
 
 
-        private static T GetImage(string serializedObj)
+        private T GetImage(string serializedObj)
         {
             var img = JsonConvert.DeserializeObject<T>(serializedObj);
             return img;
@@ -84,36 +83,6 @@ namespace Snapshot
         {
             var guid = Guid.NewGuid();
             return guid.ToString();
-        }
-
-
-        private string CreateHash(ISnapshot obj)
-        {
-            var snapshotHashProvider = new SnapshotHashProvider();
-            var serializedObj = JsonConvert.SerializeObject(obj);
-            var hash = new StringBuilder();
-            var s = serializedObj + DateTime.Now.ToString("yyyy-mm-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
-            var byteArray = Encoding.UTF8.GetBytes(s);
-            using (var stream = new MemoryStream(byteArray))
-            {
-                snapshotHashProvider.Key = byteArray;
-                snapshotHashProvider.ComputeHash(stream);
-                hash.Append(Convert.ToBase64String(snapshotHashProvider.GetFinalizedHashCode()));
-            }
-
-            return hash.ToString();
-        }
-
-
+        }        
     }
-
-
-
-
-  
-
-
-
-
-
 }

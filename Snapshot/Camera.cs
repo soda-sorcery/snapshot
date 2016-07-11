@@ -1,28 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-
-using System.IO;
-using Newtonsoft.Json;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
-using System.Security.Cryptography;
 
 namespace Snapshot
 {
     // this is the container for all snapshots in the app
     public class Camera : ICamera
     {
-        private static Dictionary<int, List<ISnapshot>> _snapShots = new Dictionary<int, List<ISnapshot>>();
-        private static Dictionary<int, List<Task>> _promises = new Dictionary<int, List<Task>>();
-
-        private static Dictionary<int, SnapshotTypeCollection> _typeCollectionHashMap = new Dictionary<int, SnapshotTypeCollection>();
-        private static Dictionary<int, ISnapshot> _snapshotParentHash = new Dictionary<int, ISnapshot>();
-
+        private static readonly Dictionary<int, List<ISnapshot>> _snapShots = new Dictionary<int, List<ISnapshot>>();
+        private static readonly Dictionary<int, SnapshotTypeCollection> _typeCollectionHashMap = new Dictionary<int, SnapshotTypeCollection>();       
 
         // snapshot creation method -- 
         public static Snapshot<T> CreateSnapShot<T>(T obj, bool excludeSnapshotTypeCollection = false) where T : ISnapshot
@@ -36,13 +23,7 @@ namespace Snapshot
         // snapshot creation method used when Iautosnapshot is implemented. this method is called from snapshot when a subscription
         // to a object is fired.
         internal static void CreateSnapshot<T>(T obj, int key, bool excludeSnapshotTypeCollection = false) where T : ISnapshot
-        {
-            //if (_promises.ContainsKey(key))
-            //{
-            //    _promises[key].Add(Task.Run(() => AddSnapshotToCamera(obj, key, excludeSnapshotTypeCollection)));
-            //    return;
-            //}
-            //_promises.Add(key, new List<Task> { Task.Run(() => AddSnapshotToCamera(obj, key, excludeSnapshotTypeCollection)) });
+        {            
 
             AddSnapshotToCamera(obj, key, excludeSnapshotTypeCollection);
         }
@@ -86,9 +67,6 @@ namespace Snapshot
             {
                 return null;
             }
-
-
-          //  await Task.WhenAll(_promises[key]);
 
             // get the collection
             var snapshots = _snapShots[key];
