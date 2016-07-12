@@ -10,7 +10,7 @@ Think of it as a picture of an object at a moment in time. The `Snapshot` class 
 ## What’s the Camera?
 The library revolves around a single instance of `Camera`. The `Camera` can be thought of as a container. It creates snapshots of objects and has the ability to retrieve them. The `ICamera` interface needs to be wired up through your IoC Container as a Singleton when your App starts. Then inject it wherever you need to retrieve the snapshots for a particular instance or type.
 The `Camera` class comes with a few helpful methods
-* `GetAllSnapshots<T>(T obj)` - where obj is the instance you’d like to get the snapshots.
+* `GetAllSnapshots<T>(T obj)` - gets all the snapshots for a specified object
 * `GetSnapShotTypeCollection<T>(T obj)` - returns all snapshots for a specific type
 * ` GetFirstSnapshot<T>(T obj)` - retrieves the original snapshot from the collection
 * `GetLatestSnapShot<T>(T obj)` - gets the most recent snapshot added to the collection
@@ -18,10 +18,10 @@ The `Camera` class comes with a few helpful methods
 ## How Does it All Fit Together?
 Taking a Snapshot is easy, instantiate an object and then chain one of the three Snapshot options to your object, like this:
 
-`var superhero = new Superhero(“Superman”).TakeSnapshot<Superman>();`
+`var superhero = new Superhero(“Superman”).TakeSnapshot<Superhero>();`
 
 Now, what’s going on here? This part should be familiar: `var superhero = new Superhero(“Superman”)` we’re simply instantiating the `Superhero` class. 
-Here’s the fun part: `.TakeSnapshot<Superman>();` with that, a snapshot has been created. 
+Here’s the fun part: `.TakeSnapshot<Superhero>();` with that, a snapshot has been created. 
 
 The Snapshot library extends the `Object` class to provide this functionality. There are three extension methods:
 * `TakeSnapshot<T>`
