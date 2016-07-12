@@ -18,9 +18,9 @@ The `Camera` class comes with a few helpful methods
 ## How Does it All Fit Together?
 Taking a Snapshot is easy, instantiate an object and then chain one of the three Snapshot options to your object, like this:
 
-`var superhero = new Superhero(“Superman”).TakeSnapshot<Superhero>();`
+`var superman = new Superhero(“Superman”).TakeSnapshot<Superhero>();`
 
-Now, what’s going on here? This part should be familiar: `var superhero = new Superhero(“Superman”)` we’re simply instantiating the `Superhero` class. 
+Now, what’s going on here? This part should be familiar: `var superman = new Superhero(“Superman”)` we’re simply instantiating the `Superhero` class. 
 Here’s the fun part: `.TakeSnapshot<Superhero>();` with that, a snapshot has been created. 
 
 The Snapshot library extends the `Object` class to provide this functionality. There are three extension methods:
