@@ -98,7 +98,7 @@ public void Simple_Example_With_Auto_Snapshot()
 
     // we can see that evertime Clark became Superman, and vice-versa, that we captured
     // the superhero object and the moment in time when it changed.            
-    Assert.True(snapshots.Count >= 6);
+    Assert.True(snapshots.Count == 6);
 }
 ```
 
@@ -112,7 +112,7 @@ After the name property changes a few times, we want to grab all the Snapshots t
 
 We can see that every time Clark became Superman, and vice-versa, that we captured the superhero object and the moment in time when it changed.            
 
-`Assert.True(snapshots.Count >= 6);`
+`Assert.True(snapshots.Count == 6);`
 
 
 ## `TakeTypeSnapshot<T>` Example
@@ -144,7 +144,7 @@ public void Simple_Example_With_Type_Snapshot()
     var supermanShots = _camera.GetAllSnapshots(superman);
 
     // the type snapshot contains all of the snapshots taken for a type
-    Assert.True(typeSnapshots.Count >= 6);
+    Assert.True(typeSnapshots.Count == 6);
 
     // only the specific instance snapshots are returned
     Assert.True(batmanShots.Count == 3);
@@ -172,7 +172,7 @@ And we also want just the `batman` specific snapshots:
 
 The type snapshot collection contains all of the snapshots taken for the ‘Superhero` type
 
-`Assert.True(typeSnapshots.Count >= 6);`
+`Assert.True(typeSnapshots.Count == 6);`
 
 And the `batman` specific collection only contains, yup--you guessed it, `batman` specific snapshots
 
@@ -220,10 +220,10 @@ public void Simple_Example_With_Private_Snapshot()
 
     // the type snapshots will only contain six snapshots instead of 8, because the catwoman
     // instance is a private snapshot
-    Assert.True(typeSnapshots.Count >= 6);
+    Assert.True(typeSnapshots.Count == 6);
 
     // the catwoman shot will contain all snapshots of the catwoman instance.
-    Assert.True(catwomanShots.Count >= 2);
+    Assert.True(catwomanShots.Count == 2);
 }
 ```
 This is very similar to our last example, except for one thing. The `catwoman` object uses `TakePrivateSnapshot<T>`.   
