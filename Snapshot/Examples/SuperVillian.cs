@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace Snapshot.Examples
 {
-    public class SuperVillian : ISnapshot
+public class SuperVillian : ISnapshot
+{
+    public SuperVillian(string name)
     {
-        public SuperVillian(string name)
-        {
-            Name = name;
-        }
-
-        public string Name { get; set; }
-
-        public bool HasEvilPlan { get; set; }
+        Name = name;
     }
+
+    public string Name { get; set; }
+
+    public bool HasEvilPlan { get; set; }      
+}
 }

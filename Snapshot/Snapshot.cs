@@ -66,9 +66,7 @@ namespace Snapshot
 
         public void OnPropChanged(object sender, PropertyChangedEventArgs e)
         {            
-            var obj = (T) sender;
-           
-
+            var obj = (T) sender;          
             Camera.CreateSnapshot(obj, _key, _isPrivate);
         }
 

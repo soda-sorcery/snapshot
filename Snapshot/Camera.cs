@@ -12,11 +12,10 @@ namespace Snapshot
         private static readonly Dictionary<int, SnapshotTypeCollection> _typeCollectionHashMap = new Dictionary<int, SnapshotTypeCollection>();       
 
         // snapshot creation method -- 
-        public static Snapshot<T> CreateSnapShot<T>(T obj, bool excludeSnapshotTypeCollection = false) where T : ISnapshot
+        public static Snapshot<T> CreateSnapshot<T>(T obj, bool excludeSnapshotTypeCollection = false) where T : ISnapshot
         {
             // the object's hash code is used as the key because it shows reference equality
             var key = obj.GetHashCode();
-
             return AddSnapshotToCamera(obj, key, excludeSnapshotTypeCollection);
         }
 
@@ -24,7 +23,6 @@ namespace Snapshot
         // to a object is fired.
         internal static void CreateSnapshot<T>(T obj, int key, bool excludeSnapshotTypeCollection = false) where T : ISnapshot
         {            
-
             AddSnapshotToCamera(obj, key, excludeSnapshotTypeCollection);
         }
 
@@ -78,20 +76,11 @@ namespace Snapshot
         }
 
         // gets all snapshots of a type
-        public List<Snapshot<T>> GetSnapShotTypeCollection<T>(T obj) where T : ISnapshot
+        public List<Snapshot<T>> GetSnapShotTypeCollection<T>() where T : ISnapshot
         {
 
-            var typeKey = obj.GetType();
-            var key = obj.GetHashCode();
-            if (!IsValid(key, obj))
-            {
-                return null;
-            }
-
-            //await Task.WhenAll(_promises[key]);
-
-            var snapshotTypeCollection = GetSnapshotTypeCollection(typeKey);
-            var snapshots = FinalizeSnapshots<T>(snapshotTypeCollection.snapshots);
+            var snapshotTypeCollection = GetSnapshotTypeCollection(typeof(T));
+            var snapshots = FinalizeSnapshots<T>(snapshotTypeCollection.GetSnapshots());
 
             return snapshots;
         }

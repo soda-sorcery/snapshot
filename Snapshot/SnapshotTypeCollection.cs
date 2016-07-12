@@ -20,7 +20,7 @@ namespace Snapshot
     {
         internal int Id { get; private set; }
         
-        internal List<ISnapshot> snapshots = new List<ISnapshot>();
+        private List<ISnapshot> _snapshots = new List<ISnapshot>();
 
         internal void Add(ISnapshot snapshot)
         {
@@ -29,13 +29,12 @@ namespace Snapshot
 
         private void AddToSnapshots(ISnapshot snapshot)
         {
-            snapshots.Add(snapshot);
+            _snapshots.Add(snapshot);
         }
 
         internal List<ISnapshot> GetSnapshots()
         {
-            
-            return snapshots;
+            return _snapshots;
         }
     }
 }
