@@ -8,7 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace Snapshot
 {
     // this is the container for all snapshots in the app
-    public class Camera : ICamera
+    public sealed class Camera : ICamera
     {
         private static readonly Dictionary<int, List<ISnapshot>> _snapShots = new Dictionary<int, List<ISnapshot>>();
         private static readonly Dictionary<int, SnapshotTypeCollection> _typeCollectionHashMap = new Dictionary<int, SnapshotTypeCollection>();       
@@ -46,8 +46,6 @@ namespace Snapshot
         // returns the lastest snapshot added to the gallery
         public Snapshot<T> GetLatestSnapShot<T>(T obj) where T : ISnapshot
         {
-            
-
             if (!IsValid(obj))
             {
                 return null;
@@ -59,7 +57,7 @@ namespace Snapshot
         }
 
         // gets all the snapshots associated with a specific reference
-        public List<Snapshot<T>> GetAllSnapshots<T>(T snapshot) where T : ISnapshot
+        public IList<Snapshot<T>> GetAllSnapshots<T>(T snapshot) where T : ISnapshot
         {           
             if (!IsValid(snapshot))
             {
@@ -78,12 +76,10 @@ namespace Snapshot
         }
 
         // gets all snapshots of a type
-        public List<Snapshot<T>> GetSnapShotTypeCollection<T>() where T : ISnapshot
+        public IList<Snapshot<T>> GetSnapShotTypeCollection<T>() where T : ISnapshot
         {
-
             var snapshotTypeCollection = GetSnapshotTypeCollection(typeof(T));
             var snapshots = FinalizeSnapshots<T>(snapshotTypeCollection.GetSnapshots());
-
             return snapshots;
         }
 
@@ -94,6 +90,7 @@ namespace Snapshot
             {
                 return null;
             }
+
             var snapshots = GetAllSnapshots<T>(obj);
             var snapshot = snapshots.First();
             return snapshot;
@@ -121,10 +118,9 @@ namespace Snapshot
             _typeCollectionHashMap.Add(key, typeCollection);
         }
 
+        // deletes a collection of snapshots from the camera
         public bool DeleteSnapshots<T>(T obj) where T : ISnapshot
         {
-            
-
             if (!IsValid(obj))
             {
                 return false;
@@ -209,11 +205,7 @@ namespace Snapshot
 
         private static void AddToSnapshotHash<T>(int key, Snapshot<T> snapshot) where T : ISnapshot
         {
-            if (snapshot == null)
-            {
-                return;
-            }
-
+            
             if (_snapShots.ContainsKey(key))
             {
                 _snapShots[key].Add(snapshot);
