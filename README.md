@@ -3,7 +3,7 @@ Snapshot is an object history library. It allows a user to get the changes of an
 
 ## What’s a Snapshot?
 Think of it as a picture of an object at a moment in time. The `Snapshot` class has 3 public properties
-* `ObjImage` - This is the actual object the snapshot was taken of. It has all the values assigned to its properties from when the object was taken
+* `ObjImage` - This is the actual object the snapshot was taken of. It has all the values assigned to its properties from when the snapshot was taken
 * `Id` - The unique Id for a snapshot
 * `CreateDate` - The date the the Snapshot was created
 
@@ -135,7 +135,7 @@ public void Simple_Example_With_Type_Snapshot()
     superman.Name = "Superman";
 
     // we get all the type snapshots
-    var typeSnapshots = _camera.GetSnapShotTypeCollection(superman);
+    var typeSnapshots = _camera.GetSnapShotTypeCollection<Superhero>();
 
     // we get specific snapshots for an instance
     var batmanShots = _camera.GetAllSnapshots(batman);
@@ -164,7 +164,7 @@ We also create a superhero instance and simultaneously invoke the `TakeSnapshot`
 
 Now we need to get all the type snapshots:
 
-`var typeSnapshots = _camera.GetSnapShotTypeCollection(superman);`
+`var typeSnapshots = _camera.GetSnapShotTypeCollection<Superhero>();`
 
 And we also want just the `batman` specific snapshots:
 
@@ -213,7 +213,7 @@ public void Simple_Example_With_Private_Snapshot()
     catwoman.Name = "Catwoman";
 
     // get all snapshots for a type
-    var typeSnapshots = _camera.GetSnapShotTypeCollection(superman);
+    var typeSnapshots = _camera.GetSnapShotTypeCollection<Superhero>();
 
     // get the instance specific 
     var catwomanShots = _camera.GetAllSnapshots(catwoman);
