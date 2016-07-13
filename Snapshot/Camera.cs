@@ -31,8 +31,8 @@ namespace Snapshot
         // add a new snapshot to the camera roll (container)
         private static Snapshot<T> AddSnapshotToCamera<T>(T obj, int key, bool excludeSnapshotTypeCollection = false) where T : ISnapshot
         {
-            var snapshot = new Snapshot<T>(obj, excludeSnapshotTypeCollection);
-            AddToSnapshotHash(key, snapshot);
+            
+            var snapshot = AddToSnapshotHash(key, obj, excludeSnapshotTypeCollection);
 
             // here a check is made to see if there are related types in the gallery, i.e., 
             // several instances of the same class
@@ -203,18 +203,26 @@ namespace Snapshot
         }
 
 
-        private static void AddToSnapshotHash<T>(int key, Snapshot<T> snapshot) where T : ISnapshot
+        private static Snapshot<T> AddToSnapshotHash<T>(int key, T obj, bool excludeSnapshotTypeCollection) where T : ISnapshot
         {
-            
+            Snapshot<T> snapshot;            
+
             if (_snapShots.ContainsKey(key))
             {
+                snapshot = new Snapshot<T>(obj, excludeSnapshotTypeCollection);
                 _snapShots[key].Add(snapshot);
             }
             else
-            {
-                _snapShots.Add(key, new List<ISnapshot> { snapshot });
+            {                
+                snapshot = new Snapshot<T>(obj, excludeSnapshotTypeCollection);
+
+                // we only attempt a subscription when the first snapshot for an object is taken         
                 snapshot.TryCreateSubscription();
+
+                _snapShots.Add(key, new List<ISnapshot> { snapshot });                
+
             }
+            return snapshot;
         }   
     }
 

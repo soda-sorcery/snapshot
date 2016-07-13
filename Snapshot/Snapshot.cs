@@ -26,13 +26,14 @@ namespace Snapshot
     {
         internal Snapshot(T obj, bool isPrivate = false)
         {
-            var serializedObj = JsonConvert.SerializeObject(obj);          
+            var serializedObj = JsonConvert.SerializeObject(obj);
             _key = obj.GetHashCode();
             CreateDate = DateTime.Now;
             Id = CreateId();
             ObjImage = GetImage(serializedObj);
             _reference = obj;
-            _isPrivate = isPrivate;                       
+            _isPrivate = isPrivate;
+            
         }
 
         // public properties
@@ -50,6 +51,7 @@ namespace Snapshot
 
         internal void TryCreateSubscription()
         {
+
             var implementedInterfaces = _reference.GetType().GetInterfaces().FirstOrDefault(r => r == typeof(IAutoSnapshot));
             if (implementedInterfaces == null)
             {
@@ -61,12 +63,11 @@ namespace Snapshot
             {
                 publisher.PropertyChanged += OnPropChanged;
             }
-
         }
 
         public void OnPropChanged(object sender, PropertyChangedEventArgs e)
-        {            
-            var obj = (T) sender;          
+        {
+            var obj = (T)sender;
             Camera.CreateSnapshot(obj, _key, _isPrivate);
         }
 
@@ -81,6 +82,6 @@ namespace Snapshot
         {
             var guid = Guid.NewGuid();
             return guid.ToString();
-        }        
+        }
     }
 }
