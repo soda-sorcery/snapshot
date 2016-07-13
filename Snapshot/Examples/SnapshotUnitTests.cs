@@ -45,7 +45,10 @@ namespace Snapshot.Examples
             var snapshots = _camera.GetAllSnapshots(superman);
 
             // we can see that evertime Clark became Superman, and vice-versa, that we captured
-            // the superhero object and the moment in time when it changed.            
+            // the superhero object and the moment in time when it changed.
+            
+            output.WriteLine(snapshots.Count.ToString());
+                        
             Assert.True(snapshots.Count >= 6);
         }
 
@@ -136,6 +139,37 @@ namespace Snapshot.Examples
 
             // we now have two snaphots, the initial initialization and one after the property changed
             Assert.True(snapshots.Count == 2);
+        }
+
+        [Fact]
+        public void Simple_Example_Deleting_Snapshots()
+        {
+            var superman = new Superhero("Clark Kent").TakeSnapshot<Superhero>();
+
+            superman.Name = "Superman";
+
+            superman.Name = "Clark";
+
+            var snapshots = _camera.GetAllSnapshots(superman);
+
+            Assert.True(snapshots.Count == 3);
+
+            _camera.DeleteSnapshots(superman);
+
+            var deletedSnapshots = _camera.GetAllSnapshots(superman);
+
+            Assert.True(deletedSnapshots == null);
+        }
+
+        [Fact]
+        public void What_Happens_When_Private_Snapshot_Is_Invoked_Later()
+        {
+            var spiderman = new Superhero("Spiderman").TakeTypeSnapshot<Superhero>();
+            var captainAmerica = new Superhero("Captain America").TakeSnapshot<Superhero>();
+            captainAmerica.TakePrivateSnapshot<Superhero>();
+            captainAmerica.Name = "Steve";
+            var typeSnapshots = _camera.GetSnapShotTypeCollection<Superhero>();
+            Assert.True(typeSnapshots.Count == 3);
         }
 
     }

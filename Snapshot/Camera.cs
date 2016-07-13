@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 
 namespace Snapshot
@@ -44,9 +46,9 @@ namespace Snapshot
         // returns the lastest snapshot added to the gallery
         public Snapshot<T> GetLatestSnapShot<T>(T obj) where T : ISnapshot
         {
-            var key = GetKey(obj);
+            
 
-            if (!IsValid(key, obj))
+            if (!IsValid(obj))
             {
                 return null;
             }
@@ -58,13 +60,13 @@ namespace Snapshot
 
         // gets all the snapshots associated with a specific reference
         public List<Snapshot<T>> GetAllSnapshots<T>(T snapshot) where T : ISnapshot
-        {
-            var key = GetKey(snapshot);
-
-            if (!IsValid(key, snapshot))
+        {           
+            if (!IsValid(snapshot))
             {
                 return null;
             }
+
+            var key = GetKey(snapshot);
 
             // get the collection
             var snapshots = _snapShots[key];
@@ -87,10 +89,8 @@ namespace Snapshot
 
         // gets the first snapshot taken of a reference
         public Snapshot<T> GetFirstSnapshot<T>(T obj) where T : ISnapshot
-        {
-            var key = obj.GetHashCode();
-
-            if (!IsValid(key, obj))
+        {            
+            if (!IsValid(obj))
             {
                 return null;
             }
@@ -103,6 +103,11 @@ namespace Snapshot
         // and not a reference
         public static void AddToSnapshotTypeCollection<T>(T obj, Snapshot<T> snapshot) where T : ISnapshot
         {
+            if (obj == null || snapshot == null)
+            {
+                return;
+            }
+
             var key = obj.GetType().GetHashCode();
 
             if (_typeCollectionHashMap.ContainsKey(key))
@@ -115,6 +120,23 @@ namespace Snapshot
             typeCollection.Add(snapshot);
             _typeCollectionHashMap.Add(key, typeCollection);
         }
+
+        public bool DeleteSnapshots<T>(T obj) where T : ISnapshot
+        {
+            
+
+            if (!IsValid(obj))
+            {
+                return false;
+            }
+
+            var key = GetKey(obj);
+
+            _snapShots.Remove(key);
+            return true;
+        }
+
+        
 
         private List<Snapshot<T>> ConvertToSnapshot<T>(List<ISnapshot> snapshotsToConvert) where T : ISnapshot
         {
@@ -167,9 +189,14 @@ namespace Snapshot
             AddToSnapshotTypeCollection(obj.ObjImage, obj);
         }
 
-        private bool IsValid(int key, ISnapshot obj)
+        private bool IsValid(ISnapshot obj)
         {
-            var result = (obj != null && key > 0);
+            if (obj == null)
+            {
+                return false;
+            }
+            var key = obj.GetHashCode();
+            var result = key > 0 && _snapShots.ContainsKey(key);
             return result;
         }
 
@@ -182,6 +209,11 @@ namespace Snapshot
 
         private static void AddToSnapshotHash<T>(int key, Snapshot<T> snapshot) where T : ISnapshot
         {
+            if (snapshot == null)
+            {
+                return;
+            }
+
             if (_snapShots.ContainsKey(key))
             {
                 _snapShots[key].Add(snapshot);

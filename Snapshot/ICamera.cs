@@ -12,5 +12,6 @@ namespace Snapshot
         List<Snapshot<T>> GetAllSnapshots<T>(T snapshot) where T : ISnapshot;
         Snapshot<T> GetFirstSnapshot<T>(T obj) where T : ISnapshot;
         List<Snapshot<T>> GetSnapShotTypeCollection<T>() where T : ISnapshot;
+        bool DeleteSnapshots<T>(T obj) where T : ISnapshot;
     }
 }
