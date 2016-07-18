@@ -182,8 +182,27 @@ namespace Snapshot.Examples
             var shots = await _camera.GetSnapshotsFromTimer(superhero);
             Assert.True(shots.Count == 9);
         }
-       
 
+        [Fact]
+        public void Gets_First_Snapshot_From_Collection()
+        {
+            var superhero = new Superhero("Logan").TakeSnapshot<Superhero>();
+
+            superhero.Name = "Wolverine";
+
+            var snapshot = _camera.GetFirstSnapshot(superhero);
+
+            Assert.True(snapshot.ObjImage.Name == "Logan");
+        }
+
+        [Fact]
+        public void Gets_Last_Snapshot_From_Collection()
+        {
+            var superhero = new Superhero("Scott Summers").TakeSnapshot<Superhero>();
+            superhero.Name = "Cyclops";
+            var snapshot = _camera.GetLatestSnapShot(superhero);
+            Assert.True(snapshot.ObjImage.Name == "Cyclops");
+        }
     }
 
 }
