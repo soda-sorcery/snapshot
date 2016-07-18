@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 
 namespace Snapshot
@@ -10,8 +13,11 @@ namespace Snapshot
     // this is the container for all snapshots in the app
     public sealed class Camera : ICamera
     {
-        private static readonly Dictionary<int, List<ISnapshot>> _snapShots = new Dictionary<int, List<ISnapshot>>();
+        //private static readonly Dictionary<int, List<ISnapshot>> _snapShots = new Dictionary<int, List<ISnapshot>>();
+        private static readonly Dictionary<int, SnapshotGallery> _snapShots = new Dictionary<int, SnapshotGallery>(); 
+
         private static readonly Dictionary<int, SnapshotTypeCollection> _typeCollectionHashMap = new Dictionary<int, SnapshotTypeCollection>();       
+        private static readonly Dictionary<int, List<Task>> _promises = new Dictionary<int, List<Task>>();
 
         // snapshot creation method -- 
         public static Snapshot<T> CreateSnapshot<T>(T obj, bool excludeSnapshotTypeCollection = false) where T : ISnapshot
@@ -21,18 +27,25 @@ namespace Snapshot
             return AddSnapshotToCamera(obj, key, excludeSnapshotTypeCollection);
         }
 
-        // snapshot creation method used when Iautosnapshot is implemented. this method is called from snapshot when a subscription
+        public static Snapshot<T> CreateTimedSnapshot<T>(T obj, int timer) where T : ISnapshot
+        {
+            var key = obj.GetHashCode();            
+            return AddSnapshotToCamera(obj, key, false, timer);
+        }
+
+        
+
+        // snapshot creation method used when IAutosnapshot is implemented. this method is called from snapshot when a subscription
         // to a object is fired.
         internal static void CreateSnapshot<T>(T obj, int key, bool excludeSnapshotTypeCollection = false) where T : ISnapshot
         {            
             AddSnapshotToCamera(obj, key, excludeSnapshotTypeCollection);
         }
 
-        // add a new snapshot to the camera roll (container)
-        private static Snapshot<T> AddSnapshotToCamera<T>(T obj, int key, bool excludeSnapshotTypeCollection = false) where T : ISnapshot
-        {
-            
-            var snapshot = AddToSnapshotHash(key, obj, excludeSnapshotTypeCollection);
+        // add a new snapshot to the camera (container)
+        private static Snapshot<T> AddSnapshotToCamera<T>(T obj, int key, bool excludeSnapshotTypeCollection = false, int timer = 0) where T : ISnapshot
+        {            
+            var snapshot = AddToSnapshotHash(key, obj, excludeSnapshotTypeCollection, timer);
 
             // here a check is made to see if there are related types in the gallery, i.e., 
             // several instances of the same class
@@ -70,7 +83,7 @@ namespace Snapshot
             var snapshots = _snapShots[key];
 
             // cast snapshots
-            var requestedSnapshots = FinalizeSnapshots<T>(snapshots);
+            var requestedSnapshots = FinalizeSnapshots<T>(snapshots.snapshots);
             
             return requestedSnapshots;
         }
@@ -81,6 +94,21 @@ namespace Snapshot
             var snapshotTypeCollection = GetSnapshotTypeCollection(typeof(T));
             var snapshots = FinalizeSnapshots<T>(snapshotTypeCollection.GetSnapshots());
             return snapshots;
+        }
+
+        // gets all snapshots that have been taken on a timer
+        public async Task<IList<Snapshot<T>>> GetSnapshotsFromTimer<T>(T obj) where T : ISnapshot
+        {
+            var key = obj.GetHashCode();
+
+            if (!_snapShots.ContainsKey(key))
+            {
+                return null;
+            }
+
+            var snapshots = _snapShots[key];
+            await snapshots.Timer.GetAllTimedSnapshots();
+            return GetAllSnapshots(obj);
         }
 
         // gets the first snapshot taken of a reference
@@ -203,27 +231,31 @@ namespace Snapshot
         }
 
 
-        private static Snapshot<T> AddToSnapshotHash<T>(int key, T obj, bool excludeSnapshotTypeCollection) where T : ISnapshot
+        private static Snapshot<T> AddToSnapshotHash<T>(int key, T obj, bool excludeSnapshotTypeCollection, int timer = 0) where T : ISnapshot
         {
             Snapshot<T> snapshot;            
 
             if (_snapShots.ContainsKey(key))
             {
                 snapshot = new Snapshot<T>(obj, excludeSnapshotTypeCollection);
-                _snapShots[key].Add(snapshot);
+                _snapShots[key].AddSnapshot(snapshot);
+                // OLD IMPLEMENTATION _snapShots[key].Add(snapshot);
             }
             else
             {                
                 snapshot = new Snapshot<T>(obj, excludeSnapshotTypeCollection);
-
+                var s = new List<ISnapshot> {snapshot};
+                var container = new SnapshotGallery().Init(snapshot, timer);
                 // we only attempt a subscription when the first snapshot for an object is taken         
                 snapshot.TryCreateSubscription();
-
-                _snapShots.Add(key, new List<ISnapshot> { snapshot });                
+                
+                _snapShots.Add(key, container);                
 
             }
             return snapshot;
-        }   
+        }
+
+         
     }
 
 

@@ -27,12 +27,13 @@ namespace Snapshot
         internal Snapshot(T obj, bool isPrivate = false)
         {
             var serializedObj = JsonConvert.SerializeObject(obj);
-            _key = obj.GetHashCode();
+            Key = obj.GetHashCode();
+            _reference = obj;
+            _isPrivate = isPrivate;
             CreateDate = DateTime.Now;
             Id = CreateId();
             ObjImage = GetImage(serializedObj);
-            _reference = obj;
-            _isPrivate = isPrivate;
+            
             
         }
 
@@ -47,7 +48,7 @@ namespace Snapshot
         // private fields
         private readonly T _reference;
         private readonly bool _isPrivate;
-        private readonly int _key;
+        internal readonly int Key;
 
         internal void TryCreateSubscription()
         {
@@ -68,7 +69,7 @@ namespace Snapshot
         public void OnPropChanged(object sender, PropertyChangedEventArgs e)
         {
             var obj = (T)sender;
-            Camera.CreateSnapshot(obj, _key, _isPrivate);
+            Camera.CreateSnapshot(obj, Key, _isPrivate);
         }
 
 

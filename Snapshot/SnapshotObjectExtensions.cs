@@ -31,5 +31,12 @@ namespace Snapshot
             Camera.AddToSnapshotTypeCollection(s, snapshot);
             return s;
         }
+
+        public static T TakeTimedSnapshot<T>(this object obj, int timer = 1000) where T : ISnapshot
+        {
+            var s = (T)obj;
+            var snapshot = Camera.CreateTimedSnapshot(s, timer);
+            return s;
+        }
     }
 }

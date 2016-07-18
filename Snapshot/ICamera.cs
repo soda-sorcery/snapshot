@@ -13,5 +13,6 @@ namespace Snapshot
         Snapshot<T> GetFirstSnapshot<T>(T obj) where T : ISnapshot;
         IList<Snapshot<T>> GetSnapShotTypeCollection<T>() where T : ISnapshot;
         bool DeleteSnapshots<T>(T obj) where T : ISnapshot;
+        Task<IList<Snapshot<T>>> GetSnapshotsFromTimer<T>(T obj) where T : ISnapshot;
     }
 }

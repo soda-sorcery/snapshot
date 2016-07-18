@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Snapshot.Examples;
 using Xunit;
@@ -162,15 +163,26 @@ namespace Snapshot.Examples
         }
 
         [Fact]
-        public void What_Happens_When_Private_Snapshot_Is_Invoked_Later()
+        public void Private_Snapshot_Doesnt_Work_When_Done_After_A_TakeSnapshot()
         {
             var spiderman = new Superhero("Spiderman").TakeTypeSnapshot<Superhero>();
             var captainAmerica = new Superhero("Captain America").TakeSnapshot<Superhero>();
             captainAmerica.TakePrivateSnapshot<Superhero>();
             captainAmerica.Name = "Steve";
             var typeSnapshots = _camera.GetSnapShotTypeCollection<Superhero>();
-            Assert.True(typeSnapshots.Count == 3);
+            output.WriteLine(typeSnapshots.Count.ToString());
+            Assert.True(typeSnapshots.Count >= 3);
         }
+
+        [Fact]
+        public async Task Take_Timed_Snapshot()
+        {
+            var superhero = new Superhero("Bruce Banner").TakeTimedSnapshot<Superhero>();
+            Thread.Sleep(8000);
+            var shots = await _camera.GetSnapshotsFromTimer(superhero);
+            Assert.True(shots.Count == 9);
+        }
+       
 
     }
 
